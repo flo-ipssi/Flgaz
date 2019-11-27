@@ -1,12 +1,19 @@
 from flask import Flask, request, render_template, redirect, url_for
 import csv
 
+# Après l'importation du module Flask 
+# On lui un nom d'application "app"
 app = Flask(__name__)
 
+# On définit une page (ou route) avec flask
+#@app.route permet de préciser à quelle adresse 
+#ce qui suit va s’appliquer.
 @app.route('/')
 def home():
     return 'Bienvenue !'
 
+
+#Definition d'une route avec deux types de methode 
 @app.route('/gaz', methods=['GET','POST'])
 def save_gazouille():
 	if request.method == 'POST':
