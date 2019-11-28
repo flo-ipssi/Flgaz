@@ -18,7 +18,6 @@ def save_gazouille():
 	if request.method == 'GET':
 		return render_template('formulaire.html')
 
-
 @app.after_request
 def add_header(response):
     response.cache_control.max_age = 300
@@ -46,8 +45,8 @@ def dump_to_csv(d):
 		writer.writerow(donnees)
 
 
-@app.route('/timelineuser/<username>', methods=['GET'])
-def timelineuser():
+@app.route('/timelineuser/<username>/', methods=['GET'])
+def timelineuser(username):
 	gaz = parse_user_from_csv(username)
 	return render_template("timeline.html", gaz = gaz)
 
