@@ -2,7 +2,6 @@ from flask import Flask, request, render_template, redirect, url_for
 import csv
 import sys
 
-enc_print(string="Content-type:text/html")
 
 # Après l'importation du module Flask 
 # On lui un nom d'application "app"
@@ -12,7 +11,7 @@ app = Flask(__name__)
 #@app.route permet de préciser à quelle adresse 
 #ce qui suit va s’appliquer.
 @app.route('/')
-def home():
+def home():     
     return 'Bienvenue !'
 
 
@@ -26,6 +25,14 @@ def save_gazouille():
 		#return "OK"
 	if request.method == 'GET':
 		return render_template('formulaire.html')
+
+
+@app.after_request
+def add_header(response):
+    response.cache_control.max_age = 300
+    response.access_control_allow_origin = '*'
+    return response
+
 
 @app.route('/timeline', methods=['GET'])
 def timeline():
