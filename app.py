@@ -5,7 +5,7 @@ app = Flask(__name__)
 
 
 @app.route('/')
-def home():     
+def home():
     return 'Bienvenue !'
 
 @app.route('/gaz', methods=['GET','POST'])
@@ -17,6 +17,7 @@ def save_gazouille():
 		return redirect(url_for('timeline'))
 	if request.method == 'GET':
 		return render_template('formulaire.html')
+
 
 @app.after_request
 def add_header(response):
@@ -45,7 +46,7 @@ def dump_to_csv(d):
 		writer.writerow(donnees)
 
 
-@app.route('/timelineuser/<username>/', methods=['GET'])
+@app.route('/timeline/<username>/', methods=['GET'])
 def timelineuser(username):
 	gaz = parse_user_from_csv(username)
 	return render_template("timeline.html", gaz = gaz)
