@@ -1,5 +1,8 @@
 from flask import Flask, request, render_template, redirect, url_for
 import csv
+import sys
+
+enc_print(string="Content-type:text/html")
 
 # Après l'importation du module Flask 
 # On lui un nom d'application "app"
