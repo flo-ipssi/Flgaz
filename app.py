@@ -46,8 +46,8 @@ def dump_to_csv(d):
 		writer.writerow(donnees)
 
 
-@app.route('/timelineuser/<username>', methods=['GET'])
-def timelineuser():
+@app.route('/timeline/<username>', methods=['GET'])
+def timelineUser():
 	gaz = parse_user_from_csv(username)
 	return render_template("timeline.html", gaz = gaz)
 
