@@ -1,4 +1,5 @@
 # Flgaz
+[Lien de l'application]http://ipssiflo.pythonanywhere.com/
 
 Application codée en python permettant d'envoyer et d'afficher des tweets 
 
@@ -35,3 +36,8 @@ Le serveur est tombé le 29/11 à 15h35 suite à l'ajout d'un filtrage. (point b
 
 #### V2.0 : Une base de données en cours de développement
 Une tentative de création d'une base de données a été initiée, mais étant donné les difficultés rencontrées lors de la configuration et la mise de celle-ci ( les requêtes depuis le projet local jusqu'en prod n'étant pas permis, il aurait fallu un abonnement sur pythonanywhere.com pour configurer la base de donnée), le projet sera ajouté dans une prochaine version( models.py ).
+
+#### Propriétaires Compte rendu
+
+Compte rendu = Emmanuel Florian
+Lejeune_jeremy_Python_ipssi = Lejeuune Jérémy
