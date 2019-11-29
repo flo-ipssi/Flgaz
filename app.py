@@ -1,27 +1,35 @@
 import csv
-import sys
 from flask import Flask, request, render_template, redirect, url_for
-
-# Après l'importation du module Flask 
-# On lui un nom d'application "app"
+"""
+    # Apres l importation du module Flask
+    # On lui un nom d application app
+"""
 app = Flask(__name__)
 
-# On définit une page (ou route) avec flask
-#@app.route permet de préciser à quelle adresse 
-#ce qui suit va s’appliquer.
+"""
+    # On definit une page (ou route) avec flask
+    # app route permet de préciser a quelle adresse
+    # ce qui suit va s appliquer
+"""
+
 @app.route('/')
-def home():     
+def home():
+    """
+    Definition d une route avec deux types de methode
+    """
     return 'Bienvenue !'
 
-#Definition d'une route avec deux types de methode a[:280]
 @app.route('/gaz', methods=['GET', 'POST'])
 def save_gazouille():
+    """
+    Definition d une route avec deux types de methode
+    """
     if request.method == 'POST':
         if len(request.form.get("user-text")) <= 280:
             print(request.form)
             dump_to_csv(request.form)
         return redirect(url_for('timeline'))
-        #return "OK"
+                
     if request.method == 'GET':
         return render_template('formulaire.html')
 
@@ -29,17 +37,22 @@ def save_gazouille():
 @app.after_request
 def add_header(response):
     response.cache_control.max_age = 300
-    response.access_control_allow_origin = '*'
     response.headers['Access-Control-Allow-Origin'] = '*'
     return response
 
 
 @app.route('/timeline', methods=['GET'])
 def timeline():
+    """
+    Definition d une route timeline
+    """
     gaz = parse_from_csv()
-    return render_template("timeline.html", gaz = gaz)
+    return render_template("timeline.html", gaz=gaz)
 
 def parse_from_csv():
+    """    
+    Definition de parse pour le csv
+    """
     gaz = []
     with open('./gazouilles.csv', 'r') as f:
         reader = csv.reader(f)
@@ -57,13 +70,20 @@ def dump_to_csv(d):
 
 @app.route('/timeline/<username>/', methods=['GET'])
 def timelineuser(username):
+    """
+    Definition d une route timeline par user
+    """
     gaz = parse_user_from_csv(username)
-    return render_template("timeline.html", gaz = gaz)
+    return render_template("timeline.html", gaz=gaz)
 def parse_user_from_csv(user_id):
+    """
+    Definition de parse  par user
+    """
     gaz = []
     with open('./gazouilles.csv', 'r') as f:
         reader = csv.reader(f)
         for row in reader:
-            if row[0] == user_id :
+            if row[0] == user_id:
                 gaz.append({"user":row[0], "text":row[1]})
-    return gaz            
+    return gaz
+
