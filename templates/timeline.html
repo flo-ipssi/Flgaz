@@ -2,6 +2,7 @@
 <html>
 <head>
 	<title></title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 	<style>
 		.gaz{
 			margin: 10px auto;
@@ -9,11 +10,32 @@
 		}
 	</style>
 </head>
-<body>
+<body class="container">
 	{% for g in gaz %}
-	<div id="gazouille-{{loop.index}}" class="gaz">
-		<div>{{g.user}}</div>
+	<div id="gazouille-{{loop.index}}" class="gaz card gedf-card">
+		<div class="card-header">
+			<div class="d-flex justify-content-between align-items-center">
+				<div class="d-flex justify-content-between align-items-center">
+					<div class="mr-2">
+						<img class="rounded-circle" src="https://picsum.photos/50/50" alt="" width="45">
+					</div>
+					<div class="ml-2">
+						<div class="h5 m-0">@{{g.user}}</div>
+					</div>
+				</div>
+			</div>
+			<div>
+				<div class="text-muted h7 mb-2">
+					<i class="fa fa-clock-o"></i>10 min ago	
+				</div>
+			</div>
+		</div>
+		<div class="card-body">
+			<p class="card-text">
+				
 		<div>{{g.text}}</div>
+			</p>
+		</div>
 	</div>
 	{% endfor %}
 </body>
