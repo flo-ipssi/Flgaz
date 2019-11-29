@@ -2,9 +2,8 @@
 Definition d une route avec deux types de methode
 """
 
-import csv, setting
+import csv
 from flask import Flask, request, render_template, redirect, url_for
-from flask_sqlalchemy import SQLAlchemy
 
     # Apres l importation du module Flask
     # On lui un nom d APPlication APP
@@ -16,33 +15,6 @@ APP = Flask(__name__)
     # APP route permet de préciser a quelle adresse
     # ce qui suit va s APPliquer
 """
-
-
-
-APP.config["DEBUG"] = True
-DB = SQLAlchemy(APP)
-"""
-    # Création d'une classe selon la syntaxe objet SQLAlchemy
-"""
-class USER(DB.Model):
-    __tablename__ = 'USER'
-    id = DB.Column(DB.Integer, primary_key=True)
-    username = DB.Column(DB.String(80), unique=True)
-    password = DB.Column(DB.String(80))
-    tweet = DB.Column(DB.String(80), unique=True)
-USER = []
-
-
-SQLALCHEMY_DATABASE_URI = "mysql+mysqlconnector://{login}:{password}@{hostname}/{databasename}".format(
-    login=setting.CONST_LOGIN,
-    password=setting.CONST_PASSWORD,
-    hostname=setting.CONST_HOST,
-    databasename=setting.CONST_DATABASE,
-)
-APP.config["SQLALCHEMY_DATABASE_URI"] = SQLALCHEMY_DATABASE_URI
-APP.config["SQLALCHEMY_POOL_RECYCLE"] = 299
-APP.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-DB.create_all()
 
 
 
@@ -73,7 +45,7 @@ def add_header(response):
     """
 
     response.cache_control.max_age = 300
-    response.headers['Access-Control-Allow-Origin'] = '*'
+    response.headers['Access-Control-Allow-Origin'] = 'http://ipssiflo.pythonanywhere.com/'
     return response
 
 
