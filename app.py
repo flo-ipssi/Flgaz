@@ -53,3 +53,17 @@ def dump_to_csv(d):
         with open('./gazouilles.csv', 'a', newline='', encoding='utf-8') as f:
             writer = csv.writer(f)
             writer.writerow(donnees)
+
+
+@app.route('/timeline/<username>/', methods=['GET'])
+def timelineuser(username):
+    gaz = parse_user_from_csv(username)
+    return render_template("timeline.html", gaz = gaz)
+def parse_user_from_csv(user_id):
+    gaz = []
+    with open('./gazouilles.csv', 'r') as f:
+        reader = csv.reader(f)
+        for row in reader:
+            if row[0] == user_id :
+                gaz.append({"user":row[0], "text":row[1]})
+    return gaz            
