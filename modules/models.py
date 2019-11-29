@@ -1,5 +1,5 @@
-import de sqlalchemy
-from sqlalchemy import Column, Boolean, String, Integer, Numeric
+import sqlalchemy 
+from sqlalchemy import Column, Boolean, String, Integer, Numeric, Text, Datetime
 from sqlalchemy.orm import relationship, backref
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import create_engine
@@ -28,7 +28,7 @@ class Tweet(Base):
     __tablename__ = 'tweet'
     id = Column(Integer, primary_key=True)
     content = Column('content', String(64))
-    date = Column(Date, default=_get_date)
+    date = Column(DateTime, default=datetime.datetime.utcnow)
     categorie = Column('categorie', Integer)
     creator = Column('creator', Integer)
 
@@ -45,3 +45,12 @@ class Category(Base):
     # methode magique pour print()
     def __str__(self):
         return "{}".format( self.name )
+
+if __name__ == "__main__":
+    engine = "mysql+mysqlconnector://{login}:{password}@{hostname}/{databasename}".format(
+        login=setting.CONST_LOGIN,
+        password=setting.CONST_PASSWORD,
+        hostname=setting.CONST_HOST,
+        databasename=setting.CONST_DATABASE,
+    )
+    Base.metadata.create_all(engine)
