@@ -49,7 +49,7 @@ def add_header(response):
     return response
 
 
-@APP.route('/timeline', methods=['GET'])
+@APP.route('/timeline/', methods=['GET'])
 def timeline():
     """
     Definition d une route timeline
