@@ -30,11 +30,15 @@ def save_gazouille():
     """
     Definition d une route avec deux types de methode
     """
+
     if request.method == 'POST':
         if len(request.form.get("user-text")) <= 280:
-            print(request.form)
-            dump_to_csv(request.form)
+            for word in request.form.get("user-text").split():
+                if word.lower() != 'barre':
+                    print(request.form)
+                    dump_to_csv(request.form)
         return redirect(url_for('timeline'))
+
 
     return render_template('formulaire.html')
 
