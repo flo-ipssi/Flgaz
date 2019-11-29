@@ -1,62 +1,55 @@
+import csv
+import sys
 from flask import Flask, request, render_template, redirect, url_for
-import csv, setting
 
+# Après l'importation du module Flask 
+# On lui un nom d'application "app"
 app = Flask(__name__)
 
-
+# On définit une page (ou route) avec flask
+#@app.route permet de préciser à quelle adresse 
+#ce qui suit va s’appliquer.
 @app.route('/')
-def home():
+def home():     
     return 'Bienvenue !'
 
-@app.route('/gaz', methods=['GET','POST'])
+#Definition d'une route avec deux types de methode a[:280]
+@app.route('/gaz', methods=['GET', 'POST'])
 def save_gazouille():
-	if request.method == 'POST':
-		if len(request.form.get("user-text")) <= 280:
-			print(request.form)
-			dump_to_csv(request.form)
-		return redirect(url_for('timeline'))
-	if request.method == 'GET':
-		return render_template('formulaire.html')
+    if request.method == 'POST':
+        if len(request.form.get("user-text")) <= 280:
+            print(request.form)
+            dump_to_csv(request.form)
+        return redirect(url_for('timeline'))
+        #return "OK"
+    if request.method == 'GET':
+        return render_template('formulaire.html')
 
 
 @app.after_request
 def add_header(response):
     response.cache_control.max_age = 300
     response.access_control_allow_origin = '*'
+    response.headers['Access-Control-Allow-Origin'] = '*'
     return response
 
 
 @app.route('/timeline', methods=['GET'])
 def timeline():
-	gaz = parse_from_csv()
-	return render_template("timeline.html", gaz = gaz)
+    gaz = parse_from_csv()
+    return render_template("timeline.html", gaz = gaz)
 
 def parse_from_csv():
-	gaz = []
-	with open('./gazouilles.csv', 'r') as f:
-		reader = csv.reader(f)
-		for row in reader:
-			gaz.append({"user":row[0], "text":row[1]})
-	return gaz
+    gaz = []
+    with open('./gazouilles.csv', 'r') as f:
+        reader = csv.reader(f)
+        for row in reader:
+            gaz.append({"user":row[0], "text":row[1]})
+    return gaz
 
 def dump_to_csv(d):
-	donnees = [d["user-name"],d["user-text"] ]
-	with open('./gazouilles.csv', 'a', newline='', encoding='utf-8') as f:
-		writer = csv.writer(f)
-		writer.writerow(donnees)
-
-
-@app.route('/timeline/<username>/', methods=['GET'])
-def timelineuser(username):
-	gaz = parse_user_from_csv(username)
-	return render_template("timeline.html", gaz = gaz)
-
-def parse_user_from_csv(user_id):
-	gaz = []
-	with open('./gazouilles.csv', 'r') as f:
-		reader = csv.reader(f)
-		for row in reader:
-			if row[0] == user_id :
-				gaz.append({"user":row[0], "text":row[1]})
-	return gaz
-#d["user-text"][:280-]
+    donnees = [d["user-name"], d["user-text"]]
+    if len(d["user-text"]) <= 280:
+        with open('./gazouilles.csv', 'a', newline='', encoding='utf-8') as f:
+            writer = csv.writer(f)
+            writer.writerow(donnees)
